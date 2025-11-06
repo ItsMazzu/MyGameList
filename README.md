@@ -5,7 +5,8 @@ Permite que o usuário liste seus jogos (favoritos, jogando, ou planeja jogar) e
 
 ## Tecnologias Utilizadas
 
-- React.JS  
+- React.JS
+- Node.JS  
 - HTML  
 - CSS
 
