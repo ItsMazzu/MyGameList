@@ -16,7 +16,11 @@ Permite que o usuário liste seus jogos (favoritos, jogando, ou planeja jogar) e
 
 ## Equipe / Contribuidores
 
-- cada desenvolvedor possui sua própria branch de trabalho
+- Laís (Scrum Master)
+- Karina (QA)
+- Italo (SRE)
+- Ruan (https://github.com/Ruan6400) - Backend
+- Roberto (https://github.com/Rexorb) - Frontend
 
 ## Estrutura de Branches
 
