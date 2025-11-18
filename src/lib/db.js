@@ -1,0 +1,128 @@
+// --- PONTO CENTRAL DE DADOS: CONEXÃO REAL COM POSTGRESQL E FUNÇÕES DE AUTENTICAÇÃO ---
+
+// Importações diretas para melhor compatibilidade com o ambiente Next.js
+import { Pool } from 'pg';
+import bcrypt from 'bcrypt';
+
+const saltRounds = 10; // Custo do hash para bcrypt
+
+// Verifica o modo de produção
+const isProduction = process.env.NODE_ENV === 'production';
+
+// Constrói a string de conexão. O Next.js carrega o .env automaticamente no servidor.
+const connectionString = process.env.DATABASE_URL ||
+    `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+
+// Checagem de segurança e feedback
+if (!process.env.DB_NAME) {
+    console.error("🔴 [ERRO FATAL] As variáveis de ambiente do PostgreSQL (DB_*) não estão configuradas. Verifique seu arquivo .env.");
+}
+
+// Cria a piscina de conexões
+const pool = new Pool({
+  connectionString: connectionString,
+  // Necessário para conexões em hosts de produção (ex: Vercel/Heroku)
+  ssl: isProduction ? { rejectUnauthorized: false } : false, 
+});
+
+// Listener de erro para o Pool (importante para monitoramento)
+pool.on('error', (err, client) => {
+  console.error('🔴 [ERRO CRÍTICO] Erro no Pool de conexões do PostgreSQL:', err);
+});
+
+// Teste de Conexão: Otimizado para falhar rapidamente se as credenciais estiverem erradas
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('❌ [ERRO DE CONEXÃO] Falha ao conectar ao PostgreSQL. Motivo:', err.message);
+    console.warn("Dica: Verifique se o seu DB local está ativo (PostgreSQL/DBeaver) e se o .env está correto (Usuário, Senha, Porta).");
+  } else {
+    console.log(`🟢 [DB OK] Conectado com sucesso ao banco de dados "${process.env.DB_NAME}" em: ${res.rows[0].now}`);
+  }
+});
+
+
+// --------------------------------------------------------------------------
+// FUNÇÕES DE AUTENTICAÇÃO REAL (Integração com Users e bcrypt)
+// --------------------------------------------------------------------------
+
+/**
+ * Verifica se um email ou username já existe no PostgreSQL.
+ * @param {string} email 
+ * @param {string} username 
+ * @returns {Promise<boolean>}
+ */
+export async function checkExistingUser(email, username) {
+  const queryText = `
+    SELECT 1 
+    FROM Users 
+    WHERE email = $1 OR username = $2
+    LIMIT 1;
+  `;
+  const result = await pool.query(queryText, [email, username]);
+  return result.rows.length > 0;
+}
+
+/**
+ * Cria um novo usuário na tabela Users, criptografando a senha.
+ * @param {string} username 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<object>} Dados do usuário criado (sem hash)
+ */
+export async function createUser(username, email, password) {
+  // 1. Gera o hash da senha
+  const password_hash = await bcrypt.hash(password, saltRounds);
+
+  // 2. Query de inserção no PostgreSQL
+  const queryText = `
+    INSERT INTO Users (username, email, password_hash)
+    VALUES ($1, $2, $3)
+    RETURNING user_id, username, email;
+  `;
+
+  try {
+    const result = await pool.query(queryText, [username, email, password_hash]);
+    
+    return result.rows[0]; 
+
+  } catch (error) {
+    // Erro de integridade (unique violation)
+    if (error.code === '23505') { 
+        throw new Error("Email ou nome de usuário já cadastrado.");
+    }
+    // Propaga outros erros de DB
+    throw error;
+  }
+}
+
+/**
+ * Autentica o usuário verificando email e comparando o hash da senha.
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<object | null>} Dados do usuário autenticado (ou null se falhar)
+ */
+export async function authenticateUser(email, password) {
+  // 1. Busca o usuário pelo email
+  const queryText = `
+    SELECT user_id, username, email, password_hash 
+    FROM Users 
+    WHERE email = $1;
+  `;
+  const result = await pool.query(queryText, [email]);
+  const user = result.rows[0];
+
+  if (!user) {
+    return null; // Usuário não encontrado
+  }
+
+  // 2. Compara a senha fornecida com o hash armazenado
+  const match = await bcrypt.compare(password, user.password_hash);
+
+  if (match) {
+    // Retorna os dados do usuário (excluindo o hash)
+    const { password_hash, ...userData } = user;
+    return userData;
+  }
+  
+  return null; // Senha incorreta
+}

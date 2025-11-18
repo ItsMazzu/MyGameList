@@ -1,0 +1,91 @@
+@import '../variables';
+
+.authContainer {
+  // Centraliza o conteúdo verticalmente e horizontalmente no espaço principal
+  min-height: calc(100vh - #{$header-height} - 60px); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+}
+
+.authCard {
+  background-color: $color-dark-surface;
+  padding: 40px 50px;
+  border-radius: $border-radius * 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px; // Largura máxima do cartão de autenticação
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: $color-text-light;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  color: $color-text-faded;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 15px;
+  background-color: lighten($color-dark-surface, 5%);
+  border: 1px solid lighten($color-dark-surface, 10%);
+  border-radius: $border-radius;
+  color: $color-text-light;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary-blue;
+    box-shadow: 0 0 0 2px rgba($color-primary-blue, 0.3);
+  }
+}
+
+.submitButton {
+  width: 100%;
+  margin-top: 15px;
+  background-color: $color-primary-blue;
+  color: $color-text-light;
+  padding: 12px 25px;
+  border-radius: $border-radius;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: darken($color-primary-blue, 10%);
+  }
+}
+
+.switchLink {
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: $color-text-faded;
+
+  a {
+    color: $color-secondary-orange;
+    font-weight: bold;
+    margin-left: 5px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

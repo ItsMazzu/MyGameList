@@ -1,0 +1,96 @@
+@import '../variables';
+
+.heroSection {
+  // Configuração principal da seção, centralizando o conteúdo verticalmente
+  min-height: calc(100vh - #{$header-height} - 60px); // Altura da tela menos header/footer (ajuste conforme necessário)
+  display: flex;
+  align-items: center; // Centraliza verticalmente
+  justify-content: center;
+  padding: 50px;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 80px; // Espaçamento entre as duas colunas
+  max-width: 1200px;
+  width: 100%;
+}
+
+.textColumn {
+  flex: 1; // Ocupa metade do espaço
+  max-width: 600px;
+}
+
+.imageColumn {
+  flex: 1; // Ocupa metade do espaço
+  display: flex;
+  justify-content: flex-end; // Garante que o placeholder fique à direita
+  align-items: center;
+}
+
+.title {
+  font-size: 3.5rem; // Título grande e impactante
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  color: $color-text-faded;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  gap: 20px;
+}
+
+.button {
+  padding: 12px 25px;
+  border-radius: $border-radius;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+  cursor: pointer;
+  border: none; // Remove a borda padrão
+  text-decoration: none; // Garante que o link pareça um botão
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.browseButton {
+  background-color: $color-primary-blue;
+  color: $color-text-light;
+
+  &:hover {
+    background-color: darken($color-primary-blue, 10%);
+  }
+}
+
+.joinButton {
+  background-color: $color-secondary-orange;
+  color: $color-dark-bg; // Texto escuro no fundo laranja
+
+  &:hover {
+    background-color: darken($color-secondary-orange, 10%);
+  }
+}
+
+.placeholder {
+  width: 100%;
+  max-width: 450px;
+  height: 450px;
+  background-color: $color-dark-surface;
+  border: 1px dashed $color-text-faded;
+  border-radius: $border-radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // Estilo do ícone/placeholder interno, se houver
+  color: $color-text-faded;
+  font-size: 2rem;
+}

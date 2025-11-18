@@ -1,0 +1,122 @@
+@import '../variables';
+
+.rankingContainer {
+  padding: 50px 20px;
+  max-width: 1000px; // Largura máxima para a lista de ranking
+  margin: 0 auto;
+}
+
+.heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: $color-text-light;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+// Estilo do componente individual (VoteDisplay)
+.voteDisplayCard {
+  display: flex;
+  align-items: center;
+  background-color: $color-dark-surface;
+  padding: 15px 25px;
+  margin-bottom: 20px;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.rank {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $color-secondary-orange;
+  margin-right: 25px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.cover {
+  width: 70px;
+  height: 90px;
+  background-color: lighten($color-dark-surface, 5%);
+  border-radius: $border-radius / 2;
+  margin-right: 20px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: $color-text-light;
+}
+
+.genre {
+  font-size: 0.9rem;
+  color: $color-text-faded;
+  margin-top: 5px;
+}
+
+.scoreSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: 30px;
+  min-width: 120px;
+}
+
+.score {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: $color-text-light;
+  margin-bottom: 5px;
+}
+
+.voteActions {
+  display: flex;
+  gap: 10px;
+}
+
+.voteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: $border-radius / 2;
+  transition: background-color 0.2s;
+
+  // Ícones (usando Font Awesome ou SVG mockado)
+  & svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.upvote {
+    color: #4caf50; // Verde
+    &:hover {
+      background-color: rgba(#4caf50, 0.1);
+    }
+  }
+
+  &.downvote {
+    color: #f44336; // Vermelho
+    &:hover {
+      background-color: rgba(#f44336, 0.1);
+    }
+  }
+}

@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "title": "Elden Ring",
+    "slug": "elden-ring",
+    "description": "Elden Ring é um RPG de ação em um mundo aberto de fantasia sombria, co-criado por Hidetaka Miyazaki e George R.R. Martin. O jogo é conhecido por sua dificuldade, exploração profunda e narrativa enigmática.",
+    "coverUrl": "https://placehold.co/300x400/3e3e3e/ffffff?text=Elden+Ring",
+    "platforms": ["PC", "PS5", "Xbox Series X/S"],
+    "releaseDate": "25/02/2022",
+    "developer": "FromSoftware",
+    "publisher": "Bandai Namco Entertainment",
+    "score": 98520,
+    "genres": ["Ação", "RPG", "Mundo Aberto"]
+  },
+  {
+    "id": 2,
+    "title": "Grand Theft Auto V",
+    "slug": "gta-v",
+    "description": "Um jogo de ação e aventura ambientado no estado fictício de San Andreas. Acompanha três protagonistas cujas histórias se entrelaçam em missões criminosas, com um dos modos online mais populares de todos os tempos.",
+    "coverUrl": "https://placehold.co/300x400/555555/ffffff?text=GTA+V",
+    "platforms": ["PC", "PS4", "Xbox One", "PS5", "Xbox Series X/S"],
+    "releaseDate": "17/09/2013",
+    "developer": "Rockstar North",
+    "publisher": "Rockstar Games",
+    "score": 92100,
+    "genres": ["Ação", "Mundo Aberto", "Aventura"]
+  },
+  {
+    "id": 3,
+    "title": "The Legend of Zelda: Tears of the Kingdom",
+    "slug": "zelda-totk",
+    "description": "A sequência de Breath of the Wild expande drasticamente a jogabilidade, adicionando novas habilidades de construção e exploração vertical pelos céus de Hyrule.",
+    "coverUrl": "https://placehold.co/300x400/6b6b6b/ffffff?text=Zelda+TOTK",
+    "platforms": ["Nintendo Switch"],
+    "releaseDate": "12/05/2023",
+    "developer": "Nintendo EAD",
+    "publisher": "Nintendo",
+    "score": 99200,
+    "genres": ["Aventura", "RPG", "Mundo Aberto"]
+  }
+]

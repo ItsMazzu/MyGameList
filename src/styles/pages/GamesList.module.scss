@@ -1,0 +1,28 @@
+@import '../../variables';
+
+.listContainer {
+  padding: 50px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $color-text-light;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.gamesList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.noResults {
+  text-align: center;
+  font-size: 1.2rem;
+  color: $color-text-faded;
+  margin-top: 50px;
+}

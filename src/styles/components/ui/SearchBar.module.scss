@@ -1,0 +1,47 @@
+@import '../../variables';
+
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  margin: 50px auto 30px auto; // Margem superior para separar do Hero, inferior para separar do título
+  max-width: 600px; // Largura máxima para a barra de pesquisa
+  width: 100%;
+  padding: 0 20px; // Padding lateral para telas menores
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: $border-radius * 2; // Borda mais arredondada
+  border: 1px solid $color-dark-surface; // Borda sutil
+  background-color: lighten($color-dark-surface, 5%); // Fundo ligeiramente mais claro
+  color: $color-text-light;
+  font-size: 1.1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &::placeholder {
+    color: $color-text-faded;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary-blue;
+    box-shadow: 0 0 0 3px rgba($color-primary-blue, 0.3);
+  }
+}
+
+.searchButton {
+  // Estilo para o botão, se você decidir adicioná-lo
+  background-color: $color-primary-blue;
+  color: $color-text-light;
+  border: none;
+  padding: 12px 15px;
+  border-radius: $border-radius * 2;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken($color-primary-blue, 10%);
+  }
+}
