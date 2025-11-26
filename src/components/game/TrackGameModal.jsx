@@ -51,7 +51,7 @@ const TrackGameModal = ({ game, onClose, onTrackSuccess }) => {
     };
 
     try {
-      const response = await fetch("/api/user_games", {
+      const response = await fetch("/api/games/user_games", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

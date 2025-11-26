@@ -243,6 +243,38 @@ export async function getGamesNeedingCover() {
 
   return result.rows;
 }
+// Busca os jogos que o usuário favoritou e traz para exibir na página /library
+export async function getUserLibrary(userId) {
+  // NOTA: Usamos 'cover_image_url' para a capa, consistente com outras funções deste db.js.
+  const queryText = `
+    SELECT
+        ug.status,
+        ug.rating,
+        ug.hours_played,
+        ug.platform,
+        ug.start_date,
+        ug.completion_date,
+        g.id AS game_id,
+        g.title AS game_title,
+        g.cover_image_url AS game_cover
+    FROM 
+        user_games ug
+    JOIN 
+        games g ON ug.game_id = g.id
+    WHERE 
+        ug.user_id = $1
+    ORDER BY 
+        ug.updated_at DESC;
+  `;
+
+  try {
+    const result = await pool.query(queryText, [userId]);
+    return result.rows;
+  } catch (error) {
+    console.error('Erro ao buscar a biblioteca do usuário:', error.message);
+    throw new Error('Falha ao buscar dados da biblioteca no banco de dados.');
+  }
+}
 
 
 // Re-exporta tudo para que a API possa usar o pool se necessário
