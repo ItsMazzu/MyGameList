@@ -1,20 +1,37 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'; // Novo import!
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+// Importação do SASS/SCSS
 import styles from '../../styles/pages/Auth.module.scss';
+// NOVO: Importa o hook useAuth para gerenciar o estado global
+import { useAuth } from '../../context/AuthContext'; 
 
 // Prop 'isLogin' define se o formulário será de Login (true) ou Cadastro (false)
 const AuthForm = ({ isLogin }) => {
-  const router = useRouter(); // Inicializa o router
+  const router = useRouter(); 
+  // OBTÉM a função de login e o estado de autenticação do contexto
+  const { login, isAuthenticated, loading: authLoading } = useAuth(); 
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState(''); // Apenas para cadastro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Lógica (mock) que seria conectada ao Firebase Auth ou API
+  // Redireciona se o usuário JÁ estiver autenticado e não estiver na página inicial
+  // Isso garante que ele não veja o formulário de login/cadastro se já estiver logado.
+  React.useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+        router.replace('/mylist'); // Ou para a página principal do seu app
+    }
+  }, [isAuthenticated, authLoading, router]);
+
+  // Lógica de Submissão
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Prevenindo submissão se o contexto ainda estiver carregando
+    if (authLoading) return; 
+    
     setLoading(true);
     setError(null);
     
@@ -42,12 +59,14 @@ const AuthForm = ({ isLogin }) => {
       
       // Sucesso na operação
       if (isLogin) {
-        alert("Login bem-sucedido!");
-        // Futuramente, chamaremos o AuthContext aqui. Por enquanto, redireciona para Home.
-        router.push('/'); 
+        // PASSO CRUCIAL: Chama a função login do contexto para salvar o usuário e o token no localStorage
+        // O AuthContext é responsável por definir isAuthenticated = true e redirecionar para '/mylist'
+        login(data.user); 
+        // Não é necessário chamar router.push aqui, pois o AuthContext já o faz.
+        
       } else {
-        alert("Usuário cadastrado com sucesso! Faça login para continuar.");
-        router.push('/login'); // Redireciona para a página de Login
+        // Sucesso no Cadastro: Redireciona para a página de Login
+        router.push('/login'); 
       }
 
     } catch (err) {
@@ -64,6 +83,15 @@ const AuthForm = ({ isLogin }) => {
   const switchMessage = isLogin 
     ? { text: 'Não tem uma conta?', linkText: 'Cadastre-se', href: '/signup' }
     : { text: 'Já tem uma conta?', linkText: 'Faça Login', href: '/login' };
+    
+  // Exibe tela de carregamento se o AuthContext estiver verificando a autenticação
+  if (authLoading || isAuthenticated) {
+    return (
+      <div className={styles.loadingScreen}>
+        Carregando autenticação...
+      </div>
+    );
+  }
 
   return (
     <div className={styles.authContainer}>
@@ -71,7 +99,8 @@ const AuthForm = ({ isLogin }) => {
         <h2 className={styles.title}>{title}</h2>
 
         {/* Mensagem de Erro */}
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+        {/* Usando o estilo direto para a cor, mas você deve integrar isso ao Auth.module.scss */}
+        {error && <p className={styles.errorMessage}>{error}</p>}
 
         <form onSubmit={handleSubmit}>
           
@@ -129,7 +158,7 @@ const AuthForm = ({ isLogin }) => {
         {/* Link para alternar entre Login e Cadastro */}
         <div className={styles.switchLink}>
           {switchMessage.text}
-          <Link href={switchMessage.href}>
+          <Link href={switchMessage.href} className={styles.switchLinkAnchor}>
             {switchMessage.linkText}
           </Link>
         </div>

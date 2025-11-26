@@ -5,17 +5,23 @@ import styles from '../layout/Header.module.scss';
 
 const Header = () => {
   const { user, isAuthenticated, logout } = useAuth(); // Obtém o estado e a função do contexto
+  
+  // Define o destino do link "Home": /mylist se logado, / se deslogado.
+  const homeLinkDestination = isAuthenticated ? '/mylist' : '/';
 
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
-        <Link href="/">
+        {/* Logo: usa o destino condicional */}
+        <Link href={homeLinkDestination}>
           MyGameList
         </Link>
       </div>
       
       <nav className={styles.nav}>
-        <Link href="/" className={styles.navItem}>Home</Link>
+        {/* Link Home: usa o destino condicional */}
+        <Link href={homeLinkDestination} className={styles.navItem}>Home</Link>
+        
         <Link href="/games" className={styles.navItem}>Jogos</Link>
         
         {/* Renderização condicional baseada no estado de autenticação */}

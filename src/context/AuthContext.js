@@ -1,84 +1,63 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-// 1. Cria o Contexto
 const AuthContext = createContext();
 
-/**
- * Hook customizado para usar o contexto de autenticação em qualquer lugar.
- * @returns {{
- * user: object | null,
- * isAuthenticated: boolean,
- * login: (userData: object) => void,
- * logout: () => void,
- * loading: boolean
- * }}
- */
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-// 2. Provedor de Autenticação
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null); 
+  const [loading, setLoading] = useState(true); 
   const router = useRouter();
-  
-  // Verifica se o usuário está autenticado
-  const isAuthenticated = !!user;
 
-  // Efeito para carregar o usuário do localStorage ao iniciar (simulação de sessão)
+  // Função chamada após um login bem-sucedido
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem('mgl_user', JSON.stringify(userData)); 
+
+    // Redireciona para a nova página principal do usuário logado
+    router.push('/mylist'); 
+  };
+
+  // Função para fazer logout
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('mgl_user');
+    router.push('/login'); 
+  };
+
+  // Efeito para carregar o usuário do Local Storage na inicialização
   useEffect(() => {
-    // Na produção, isso faria uma chamada para validar um token JWT
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem('mgl_user');
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch (e) {
-        console.error("Erro ao carregar usuário do localStorage:", e);
-        localStorage.removeItem('user');
+        console.error("Erro ao carregar usuário do Local Storage:", e);
+        localStorage.removeItem('mgl_user');
       }
     }
-    setLoading(false); // Indica que a checagem inicial terminou
+    setLoading(false); 
   }, []);
 
-  /**
-   * Função chamada após login bem-sucedido ou cadastro.
-   * Salva os dados do usuário e marca como logado.
-   * @param {object} userData - Dados do usuário retornado pela API (ex: id, username, email)
-   */
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
-
-  /**
-   * Função para realizar o logout.
-   */
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    // Redireciona para a home ou página de login após o logout
-    router.push('/');
-  };
-
-  const value = {
+  const contextValue = {
     user,
-    isAuthenticated,
+    isAuthenticated: !!user,
+    loading,
     login,
     logout,
-    loading,
   };
 
-  // Enquanto o carregamento inicial (do localStorage) estiver em curso, 
-  // pode-se exibir um indicador de carregamento, mas para simplificar,
-  // vamos apenas retornar os filhos.
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Exportamos o componente padrão (AuthProvider) e o hook (useAuth)
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+// --------------------------------------------------------
+// NOVO: Adiciona a exportação padrão para corrigir o erro em _app.js
+// --------------------------------------------------------
 export default AuthProvider;
