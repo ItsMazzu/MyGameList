@@ -124,3 +124,11 @@ Este projeto está licenciado sob a **MIT License** — consulte o arquivo `LICE
 
 ---
 
+##👥 Equipe
+
+- Scrum Master: Laís
+- SRE: Italo
+- QA: Karina
+- Dev Back-end: Ruan
+- Dev Front-end: Roberto
+
