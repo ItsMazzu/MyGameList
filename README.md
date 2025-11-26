@@ -124,7 +124,7 @@ Este projeto está licenciado sob a **MIT License** — consulte o arquivo `LICE
 
 ---
 
-##👥 Equipe
+## 👥 Equipe
 
 - Scrum Master: Laís
 - SRE: Italo
