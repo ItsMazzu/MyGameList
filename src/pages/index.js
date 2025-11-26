@@ -1,70 +1,95 @@
-import React from 'react';
-import Link from 'next/link';
-import VoteDisplay from '../components/game/VoteDisplay';
-import SearchBar from '../components/ui/SearchBar'; // Importa a SearchBar
-import styles from '../styles/pages/Home.module.scss'; // SASS do Hero Section
-import rankingStyles from '../styles/components/VoteDisplay.module.scss'; // SASS para o container do ranking
+import { useEffect, useState } from 'react';
+import Link from "next/link";
+import styles from '../styles/pages/Home.module.scss';
 
-// Dados simulados para o Top 5
-const topGames = [
-  { id: 1, title: 'Elden Ring', genre: 'Ação, RPG', score: 98520 },
-  { id: 2, title: 'Cyberpunk 2077', genre: 'RPG, Ficção Científica', score: 95410 },
-  { id: 3, title: 'The Witcher 3', genre: 'RPG, Fantasia', score: 92150 },
-  { id: 4, title: 'Hades', genre: 'Roguelike, Ação', score: 88700 },
-  { id: 5, title: 'Red Dead Redemption 2', genre: 'Ação, Aventura', score: 85300 },
-];
+export default function Home() {
+  const [topGames, setTopGames] = useState([]);
+  const [userLibrary, setUserLibrary] = useState([]);
 
-const HomePage = () => {
-  const handleSearch = (searchTerm) => {
-    console.log("Buscar por:", searchTerm);
-    // Futuramente: redirecionar para a página /games com o termo de busca
-    // router.push(`/games?q=${searchTerm}`);
-  };
+  useEffect(() => {
+    async function fetchTopGames() {
+      const res = await fetch('/api/top_games');
+      const data = await res.json();
+      if (data?.data) setTopGames(data.data);
+    }
+
+    async function fetchLibrary() {
+      const userId = localStorage.getItem('userId');
+      if (!userId) return; 
+
+      const res = await fetch('/api/user_library', {
+        headers: { 'x-user-id': userId }
+      });
+
+      const data = await res.json();
+      if (data?.data) setUserLibrary(data.data);
+    }
+
+    fetchTopGames();
+    fetchLibrary();
+  }, []);
 
   return (
-    <>
-      {/* HERO SECTION */}
-      <div className={styles.heroSection}>
-        <div className={styles.contentWrapper}>
-          <div className={styles.textColumn}>
-            <h1 className={styles.title}>O seu melhor local para review</h1>
-            <p className={styles.subtitle}>
-              Descubra, avalie e acompanhe os jogos que você adora. Junte-se a uma comunidade de jogadores e encontre sua próxima aventura. Sua jornada épica começa aqui!
-            </p>
-            <div className={styles.actions}>
-              <Link href="/games" className={`${styles.button} ${styles.browseButton}`}>
-                Navegar pelo Catálogo
-              </Link>
-              <Link href="/signup" className={`${styles.button} ${styles.joinButton}`}>
-                Junte-se a Comunidade
-              </Link>
-            </div>
-          </div>
-          <div className={styles.imageColumn}>
-            <div className={styles.placeholder}>
-              [Image Placeholder]
-            </div>
-          </div>
+    <div className={styles.container}>
+
+      {/* HERO CLEAN */}
+      <section className={styles.hero}>
+        <div className={styles.heroBlur}></div>
+
+        <div className={styles.heroContent}>
+          <h1 className={styles.heroTitle}>MyGameList</h1>
+
+          <p className={styles.heroDescription}>
+            Gerencie sua biblioteca, acompanhe suas avaliações e descubra novos jogos.
+            Um espaço moderno feito para jogadores que querem organizar sua jornada gamer.
+          </p>
+
+      <Link href="/signup">
+        <button className={styles.addButton}>Venha fazer parte</button>
+      </Link>
         </div>
-      </div>
+      </section>
 
-      {/* SEARCH BAR */}
-      <SearchBar onSearch={handleSearch} />
+      {/* TOP GAMES */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>🔥 Top Jogos Mais Bem Avaliados</h2>
 
-      {/* TOP VOTED GAMES SECTION */}
-      <div className={rankingStyles.rankingContainer}> {/* Reutilizando o estilo do container do ranking */}
-        <h2 className={rankingStyles.heading}>Jogos mais votados</h2> {/* Título para a seção */}
-        
-        {topGames.map((game, index) => (
-          <VoteDisplay 
-            key={game.id} 
-            game={game} 
-            rank={index + 1} 
-          />
-        ))}
-      </div>
-    </>
+        <div className={styles.carousel}>
+          {topGames.map((game) => (
+            <div key={game.game_id} className={styles.gameCard}>
+              <img src={game.game_cover} alt={game.game_title} />
+              <h3>{game.game_title}</h3>
+
+              <p className={styles.genre}>{game.genre}</p>
+
+              <div className={styles.rating}>
+                ⭐ {game.avg_rating || 'N/A'}
+                <span className={styles.votes}>({game.total_votes})</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* USER LIBRARY */}
+      {userLibrary.length > 0 && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>📚 Sua Biblioteca</h2>
+
+          <div className={styles.libraryGrid}>
+            {userLibrary.slice(0, 6).map((item) => (
+              <div key={item.game_id} className={styles.libraryCard}>
+                <img src={item.cover_image_url} alt={item.title} />
+                <h3>{item.title}</h3>
+              </div>
+            ))}
+          </div>
+
+          <button className={styles.viewMore}>
+            Ver Biblioteca Completa →
+          </button>
+        </section>
+      )}
+    </div>
   );
-};
-
-export default HomePage;
+}

@@ -277,5 +277,35 @@ export async function getUserLibrary(userId) {
 }
 
 
+//Export para trazer os jogos mais votados para a HomePage
+
+export async function getTopGames(limit = 5) {
+  const query = `
+    SELECT
+      g.id AS game_id,
+      g.title AS game_title,
+      g.cover_image_url AS game_cover,
+      g.genre,
+      ROUND(AVG(ug.rating)::numeric, 2) AS avg_rating,
+      COUNT(ug.id) AS total_votes
+    FROM games g
+    LEFT JOIN user_games ug ON ug.game_id = g.id
+    GROUP BY g.id
+    ORDER BY avg_rating DESC NULLS LAST, total_votes DESC
+    LIMIT $1;
+  `;
+  const values = [limit];
+
+  try {
+    const { rows } = await pool.query(query, values);
+    return rows;
+  } catch (err) {
+    console.error('Erro ao buscar Top Games no DB:', err.message);
+    throw err;
+  }
+}
+
+
+
 // Re-exporta tudo para que a API possa usar o pool se necessário
 export { pool };
