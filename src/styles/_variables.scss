@@ -1,0 +1,17 @@
+// Cores
+$color-dark-bg: #1e1e1e;          // Fundo principal escuro
+$color-dark-surface: #262626;     // Superfícies e Cards
+$color-text-light: #ffffff;       // Texto principal
+$color-text-faded: #a0a0a0;       // Texto secundário/pequeno
+$color-primary-blue: #007bff;     // Botão 'Browse Games' (e foco)
+$color-secondary-orange: #ffc107; // Botão 'Join the Community' (e Sign Up)
+$color-header-bg: $color-dark-bg; // Fundo do cabeçalho
+
+// Tipografia
+$font-stack: 'Inter', sans-serif; // Idealmente, se for usar uma fonte moderna
+$font-size-base: 16px;
+
+// Espaçamento e Borda
+$spacing-unit: 8px;
+$border-radius: 4px;
+$header-height: 60px;

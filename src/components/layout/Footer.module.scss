@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.footer {
+  // Posição na base da tela
+  width: 100%;
+  padding: 20px 50px;
+  
+  // Cores e separação do conteúdo principal
+  background-color: $color-dark-surface; // Um tom um pouco mais claro que o fundo
+  border-top: 1px solid lighten($color-dark-surface, 5%);
+  
+  // Alinhamento
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  // Estilo do texto
+  color: $color-text-faded;
+  font-size: 0.9rem;
+
+  // Garante que o texto fique centralizado em telas menores, se necessário
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}

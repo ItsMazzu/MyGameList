@@ -1,0 +1,227 @@
+.libraryPage {
+    padding: 30px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    color: #f0f0f0;
+}
+
+.pageTitle {
+    color: #3f51b5; /* Cor primária */
+    font-size: 2.5rem;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #b0b0b0;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* --- Filtros de Status (GamePass Style) --- */
+.filterBar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.filterButton {
+    background-color: #333;
+    color: #f0f0f0;
+    border: 1px solid #555;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-weight: 500;
+}
+
+.filterButton:hover {
+    background-color: #444;
+    border-color: #3f51b5;
+}
+
+.filterButton.active {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+    font-weight: 700;
+}
+
+/* --- Cabeçalho da Lista/Tabela --- */
+.listHeader {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 1fr 1fr 1fr 1fr 1fr; /* Colunas para os 7 dados */
+    gap: 15px;
+    padding: 15px 10px;
+    font-weight: 700;
+    color: #b0b0b0;
+    border-bottom: 2px solid #3f51b5; /* Linha de destaque */
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* Ajustes de largura para o título do jogo */
+.headerInfo {
+    grid-column: 1 / 2;
+}
+/* Alinhamento dos demais dados */
+.headerStatus, .headerData {
+    text-align: center;
+}
+
+/* --- Linha de Dados do Jogo (Row) --- */
+.listBody {
+    display: flex;
+    flex-direction: column;
+}
+
+.libraryRow {
+    display: grid;
+    grid-template-columns: 3fr 1.5fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 15px 10px;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    transition: background-color 0.1s;
+    cursor: pointer; /* Indica que é clicável para edição (futura) */
+}
+
+.libraryRow:hover {
+    background-color: #2a2a2a;
+}
+
+.gameInfo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+}
+
+.gameCover {
+    width: 40px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.gameTitle {
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.statusBadge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Cores dos Status */
+.statusCompleted { background-color: #4CAF5030; color: #4CAF50; border: 1px solid #4CAF50; } /* Verde */
+.statusPlaying { background-color: #FFC10730; color: #FFC107; border: 1px solid #FFC107; } /* Amarelo */
+.statusDropped { background-color: #F4433630; color: #F44336; border: 1px solid #F44336; } /* Vermelho */
+.statusPaused { background-color: #2196F330; color: #2196F3; border: 1px solid #2196F3; } /* Azul */
+.statusPlanned { background-color: #9E9E9E30; color: #9E9E9E; border: 1px solid #9E9E9E; } /* Cinza */
+
+.dataPoint {
+    text-align: center;
+    color: #b0b0b0;
+    font-size: 0.95rem;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 1024px) {
+    .libraryPage {
+        padding: 20px 10px;
+    }
+
+    /* Reduz o número de colunas e aumenta o tamanho do jogo */
+    .listHeader, .libraryRow {
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        font-size: 0.85rem;
+    }
+    
+    /* Esconde colunas menos prioritárias em telas menores */
+    .headerData:nth-child(5), /* Horas */
+    .headerData:nth-child(6), /* Início */
+    .headerData:nth-child(7), /* Fim */
+    .dataPoint:nth-child(5),
+    .dataPoint:nth-child(6),
+    .dataPoint:nth-child(7) {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .pageTitle {
+        font-size: 2rem;
+    }
+    
+    .filterBar {
+        justify-content: center;
+    }
+    
+    /* Layout de coluna única para visualização mobile */
+    .listHeader {
+        display: none; /* Esconde o cabeçalho da tabela */
+    }
+
+    .libraryRow {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    .gameInfo {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .statusBadge {
+        align-self: flex-end;
+    }
+    
+    .dataPoint {
+        text-align: left;
+        width: 100%;
+        padding: 3px 0;
+        border-bottom: 1px dotted #222;
+        
+        /* Simula o rótulo para telas pequenas */
+        &:before {
+            content: attr(data-label);
+            font-weight: 600;
+            margin-right: 5px;
+            color: #5d6edc;
+        }
+    }
+}
+
+.emptyState {
+    text-align: center;
+    padding: 50px;
+    color: #b0b0b0;
+    border: 1px dashed #333;
+    border-radius: 8px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.backButton {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}

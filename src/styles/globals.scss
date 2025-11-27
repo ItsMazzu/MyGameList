@@ -1,0 +1,24 @@
+// Importa as variáveis para serem usadas aqui
+@import 'variables'; 
+
+// Reset e estilos básicos
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  font-family: $font-stack;
+  color: $color-text-light;
+  background-color: $color-dark-bg; // Aplica o fundo escuro
+  min-height: 100vh;
+}
+
+// Estilos de Link (para o Next/Link)
+a {
+  color: $color-text-light;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -1,0 +1,207 @@
+@import '../variables';
+
+.container {
+  padding: 20px 40px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ============================ */
+/* HERO SECTION CLEAN + BLUR */
+/* ============================ */
+
+.hero {
+  position: relative;
+  height: 65vh;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  margin-bottom: 60px;
+  border-radius: 16px;
+
+  /* Background blur + gradient overlay */
+  background: linear-gradient(135deg, rgba(20,20,20,0.65), rgba(35,35,35,0.65));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 40px rgba(0,0,0,0.45);
+}
+
+/* Conteúdo central do hero */
+.heroContent {
+  max-width: 650px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: 54px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+
+.heroDescription {
+  font-size: 18px;
+  opacity: 0.85;
+  line-height: 1.5;
+  margin-bottom: 26px;
+  max-width: 540px;
+}
+
+/* Botão principal */
+.addButton {
+  background: #4a90e2;
+  border: none;
+  padding: 14px 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 600;
+
+  &:hover {
+    background: #6bb3ff;
+    box-shadow: 0 0 12px rgba(107, 179, 255, 0.4);
+  }
+}
+
+/* ============================ */
+/* SECTIONS */
+/* ============================ */
+
+.section {
+  margin-bottom: 50px;
+
+  .sectionTitle {
+    font-size: 26px;
+    margin-bottom: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+}
+
+/* ============================ */
+/* TOP GAMES — CAROUSEL */
+/* ============================ */
+
+.carousel {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+}
+
+/* ============================ */
+/* GAME CARDS CLEAN */
+/* ============================ */
+
+.gameCard {
+  background: linear-gradient(145deg, #1b1b1b, #161616);
+  padding: 10px;
+  border-radius: 12px;
+  min-width: 180px;
+  box-shadow: 0 0 16px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  }
+
+  img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 4px 0;
+    font-weight: 600;
+  }
+  
+  .genre {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+
+    .votes {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+}
+
+/* ============================ */
+/* USER LIBRARY — GRID */
+/* ============================ */
+
+.libraryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 18px;
+}
+
+.libraryCard {
+  background: linear-gradient(145deg, #1b1b1b, #161616);
+  padding: 14px;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.2s ease;
+  box-shadow: 0 0 16px rgba(0,0,0,0.3);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+  }
+
+  img {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border-radius: 10px;
+  }
+
+  h3 {
+    font-size: 14px;
+    margin-top: 4px;
+  }
+}
+
+.viewMore {
+  margin-top: 16px;
+  background: transparent;
+  border: none;
+  color: #4a90e2;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.2s;
+
+  &:hover {
+    color: #6bb3ff;
+  }
+}

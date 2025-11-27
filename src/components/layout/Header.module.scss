@@ -1,0 +1,61 @@
+@import '../../styles/variables';
+
+.header {
+  height: $header-height;
+  display: flex;
+  justify-content: space-between; // Alinha logo na esquerda e navegação na direita
+  align-items: center;
+  padding: 0 50px; // Espaçamento nas laterais
+  background-color: $color-header-bg;
+  border-bottom: 1px solid $color-dark-surface;
+}
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  // Estilo do troféu se for um ícone
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px; // Espaçamento entre os itens de navegação
+}
+
+.signupButton {
+  // Estilização do botão 'Sign Up'
+  background-color: $color-secondary-orange;
+  color: $color-dark-bg; // Texto escuro no fundo laranja
+  padding: 8px 15px;
+  border-radius: $border-radius;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: darken($color-secondary-orange, 10%);
+  }
+}
+
+.signinLink {
+  // Link 'Sign In'
+  color: $color-text-faded;
+
+  &:hover {
+    color: $color-text-light;
+  }
+}
+
+// ... (código anterior)
+
+.logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logoImage {
+  // Defina a altura máxima para que ele se encaixe bem no seu Header
+  height: 50px; 
+  width: auto;
+}
+
+// ... (código restante)

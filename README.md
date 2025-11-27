@@ -65,10 +65,10 @@ mygamelist-frontend/
 
 | Tela | Rota | Descrição | Status |
 | :--- | :--- | :--- | :---: |
-| **Home** | `/` | Exibe o Top 5 jogos mais votados. | 🧱 Setup Inicial |
-| **Login** | `/login` | Autenticação de usuários existentes. | 🧱 Setup Inicial |
-| **Cadastro** | `/signup` | Criação de novas contas de usuário. | 🧱 Setup Inicial |
-| **Listagem** | `/games` | Lista completa de jogos para votação. | 🕓 Planejada |
+| **Home** | `/` | Exibe o Top 5 jogos mais votados. | ✅ Finalizado |
+| **Login** | `/login` | Autenticação de usuários existentes. | ✅ Finalizado |
+| **Cadastro** | `/signup` | Criação de novas contas de usuário. | ✅ Finalizado |
+| **Listagem** | `/games` | Lista completa de jogos para votação. | ✅ Finalizado |
 | **Perfil** | `/profile/settings` | Configurações e detalhes do perfil. | 🕓 Planejada |
 
 ---
@@ -77,15 +77,22 @@ mygamelist-frontend/
 
 Siga os passos abaixo para rodar o projeto em ambiente de desenvolvimento:
 
+<strong>IMPORTANTE!!!</strong> recomendado rodar em ambientação Docker, o projeto conta com um arquivo chamado .env.example, será necessário a configuração do mesmo para que seja possível utilizar a aplicação
+
+Para isso será necessário criar uma conta no site: https://rawg.io/login?forward=developer
+
+Se dirigir na seção da API e copiar a <strong>KEY</strong> para a variável RAWG_KEY no documento .env.example e então renomear o mesmo para apenas .env
+
+Não precisa configurar o banco de dados, o arquivo init.sql cuidará de registrar os dados no banco
+
 ### 1. Pré-requisitos
 Certifique-se de ter instalado:
 - **Node.js** (versão 18 ou superior)
 - **npm** ou **yarn**
 
-### 2. Clonar o Repositório
+### 2. Clonar o Repositório (mgl-frontend)
 ```bash
-git clone [URL_DO_SEU_REPOSITORIO]
-cd mygamelist-frontend
+git clone --branch mgl-frontend https://github.com/ItsMazzu/MyGameList
 ```
 
 ### 3. Instalar Dependências
@@ -97,7 +104,13 @@ npm install
 yarn install
 ```
 
-### 4. Iniciar o Servidor de Desenvolvimento
+### 4. Iniciar o Servidor de Desenvolvimento (Docker)
+```bash
+# Montar imagem docker
+docker-compose up --build
+```
+
+### 5. Iniciar o Servidor de Desenvolvimento
 ```bash
 # Usando npm
 npm run dev

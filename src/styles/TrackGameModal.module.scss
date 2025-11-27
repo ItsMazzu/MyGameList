@@ -1,0 +1,123 @@
+$primary-color: #5f51eb;
+$surface-dark: #2a2a2a;
+$background-dark: #1A1A1A;
+$text-light: #ffffff;
+$error-color: #f44336;
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: $surface-dark;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: $text-light;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+.title {
+    color: $primary-color;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.form {
+    display: grid;
+    gap: 15px;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+
+    label {
+        color: $text-light;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    input, select {
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background-color: $background-dark;
+        color: $text-light;
+        outline: none;
+        transition: border-color 0.3s;
+
+        &:focus {
+            border-color: $primary-color;
+        }
+    }
+}
+
+.dateGroup {
+    display: flex;
+    gap: 15px;
+
+    .formGroup {
+        flex: 1;
+    }
+}
+
+.submitButton {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: $primary-color;
+    color: $text-light;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+    margin-top: 10px;
+
+    &:hover:not(:disabled) {
+        background-color: darken($primary-color, 10%);
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+.errorMessage {
+    color: $error-color;
+    background-color: rgba($error-color, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
